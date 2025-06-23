@@ -59,5 +59,29 @@ class Client{
             }
             return 0;
         }
+        int sendData(const char *buf,int len){
+            int res = send(client,buf,len,0);
+            if(res == SOCKET_ERROR){
+                printf("Unable to send buffer to server!\n");
+                closesocket(client);
+                WSACleanup();
+                return 1;
+            }
+            res = shutdown(client,SD_SEND);
+            if(res == SOCKET_ERROR){
+                printf("Unable to shutdown output stream!\n");
+                closesocket(client);
+                WSACleanup();
+                return 1;
+            }
+            return 0;
+        }
+        int readData(char* b, int len){
+            int res = 1;
+            do{
+                res = recv(client, b, len, 0);
+                //printf("%i",res);
+            } while(res>0);
+        }
     private:
 };

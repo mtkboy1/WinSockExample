@@ -29,6 +29,10 @@ int main(int argc,char *argv[]) {
     cl.initWinsock();
     if(cl.createSocket()!=1){
         cl.clientConnect();
+        cl.sendData("Hello world",512);
+        char c[512];
+        cl.readData(c,512);
+        printf(c);
     }
     return 0;
 }
